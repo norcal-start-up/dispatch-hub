@@ -1,0 +1,59 @@
+# Checks every saved change, then publishes the site only if the checks pass.
+# If a check fails, the live site stays on the last good version and GitHub
+# emails the person who made the change. The email links to a plain-language
+# list of what to fix. You never need to edit this file.
+name: Check and publish
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Check the site for mistakes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run the checks
+        run: node .github/checks/check-site.mjs
+
+  publish:
+    name: Publish the site
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add the pinned page-text reader (marked 12.0.0)
+        run: |
+          mkdir -p /tmp/pkg assets/vendor
+          cd /tmp/pkg
+          npm pack marked@12.0.0 --silent
+          tar xzf marked-12.0.0.tgz
+          if [ -f package/marked.min.js ]; then SRC=package/marked.min.js; else SRC=package/lib/marked.umd.js; fi
+          cp "$SRC" "$GITHUB_WORKSPACE/assets/vendor/marked.min.js"
+      - name: Gather the site files
+        run: |
+          mkdir -p /tmp/site
+          rsync -a --exclude '.git' --exclude '.github' ./ /tmp/site/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: /tmp/site
+      - id: deployment
+        uses: actions/deploy-pages@v4
