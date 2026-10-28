@@ -23,10 +23,10 @@ jobs:
     name: Check the site for mistakes
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
       - name: Run the checks
         run: node .github/checks/check-site.mjs
 
@@ -38,7 +38,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Add the pinned page-text reader (marked 12.0.0)
         run: |
           mkdir -p /tmp/pkg assets/vendor
@@ -51,9 +51,9 @@ jobs:
         run: |
           mkdir -p /tmp/site
           rsync -a --exclude '.git' --exclude '.github' ./ /tmp/site/
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: /tmp/site
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
