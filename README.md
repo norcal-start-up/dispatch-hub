@@ -2,7 +2,7 @@
 
 The knowledge base for NorCal Service dispatchers. It covers the full job lifecycle, from the first service request to Ready to Bill, plus preventive maintenance, parts and purchase orders, scheduling, and a four-week onboarding path for new dispatchers.
 
-**Live site:** https://crystal-jeffers.github.io/dispatch-hub/
+**Live site:** https://norcal-start-up.github.io/dispatch-hub/
 
 ## Who it's for
 

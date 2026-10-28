@@ -8,7 +8,7 @@
    See pages/reference/editing-this-hub.md for the writing guide.
    ========================================================================= */
 
-const REPO = "crystal-jeffers/dispatch-hub";   // used for "Edit this page"
+const REPO = "norcal-start-up/dispatch-hub";   // used for "Edit this page"
 const BRANCH = "main";
 
 /* A page whose Status line starts with any of these words leaves the menu

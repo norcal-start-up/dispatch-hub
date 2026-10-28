@@ -20,7 +20,7 @@ Yes. Create a free GitHub account, then ask the hub owner to add you as a collab
 Look at the address bar while you're on the page. Everything after `#/` is the page's location:
 
 ```
-crystal-jeffers.github.io/dispatch-hub/#/kb/job-tagging
+norcal-start-up.github.io/dispatch-hub/#/kb/job-tagging
 ```
 
 That page's file is `pages/kb/job-tagging.md`. Its link name is the last part, `job-tagging`. Every page also shows its link name and file at the bottom, with a Copy button.
